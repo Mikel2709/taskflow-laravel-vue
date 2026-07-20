@@ -31,6 +31,11 @@ This project was created as a practical portfolio project to demonstrate adaptab
 
 The purpose of this project is to demonstrate a first functional implementation using Laravel and Vue, aligned with backend and full-stack job requirements.
 
+## Author
+
+Miguel Ángel Bedoya Montenegro
+Full stack Developer with experience in Java, Python, SQL, PHP, Vue and software development fundamentals.
+
 ## Local Setup
 
 ```bash
@@ -42,8 +47,3 @@ type nul > database\database.sqlite
 php artisan migrate
 npm run dev
 php artisan serve
-
-## Author
-
-Miguel Ángel Bedoya Montenegro
-Full stack Developer with experience in Java, Python, SQL, PHP, Vue and software development fundamentals.
