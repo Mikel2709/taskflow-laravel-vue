@@ -38,10 +38,10 @@ class TaskController extends Controller
     {
         $validated = $request->validate([
             'title'=>['required','string','max:150'],
-            'description'=>['nullable','string'],
+            'description'=>['required','string'],
             'status'=>['required','in:pending,in_progress,completed'],
             'priority'=>['required','in:low,medium,high'],
-            'due_date'=>['nullable','date'],
+            'due_date'=>['required','date'],
         ]);
         
         $validated['user_id']=Auth::id();
@@ -77,7 +77,7 @@ class TaskController extends Controller
         }
 
         $validated = $request->validate([
-            'title'=>['sometimes','required','string','max:150'],
+            'title'=>['sometimes','filled','string','max:150'],
             'description'=>['nullable','string'],
             'status'=>['sometimes','required','in:pending,in_progress,completed'],
             'priority'=>['sometimes','required','in:low,medium,high'],

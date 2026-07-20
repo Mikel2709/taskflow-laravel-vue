@@ -1,6 +1,6 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head, useForm } from '@inertiajs/vue3';
+import { Head, router, useForm } from '@inertiajs/vue3';
 
 defineProps({
     tasks: Array, 
@@ -21,10 +21,16 @@ const submit = () => {
 };
 
 const markAsCompleted = (task) => {
-    form.patch(route('tasks.update', task.id), {
-        data: {
-            status: 'completed',
-        },
+    router.patch(route('tasks.update', task.id), {
+        status: 'completed',
+        },{
+            preserveScroll: true
+        });
+};
+
+const deleteTask = (task) => {
+    router.delete(route('tasks.destroy', task.id), {
+        preserveScroll: true,
     });
 };
 </script>
@@ -46,10 +52,13 @@ const markAsCompleted = (task) => {
 
                     <form @submit.prevent="submit" class="space-y-4">
                         <div>
-                            <label class="block text-sm font-medium">Title</label>
+                            <label class="block text-sm font-medium">
+                                Title<span class="text-red-600">*</span>
+                            </label>
                             <input
                                 v-model="form.title"
                                 type="text"
+                                required
                                 class="mt-1 w-full rounded border-gray-300"
                             />
                             <p v-if="form.errors.title" class="text-sm text-red-600">
@@ -58,17 +67,29 @@ const markAsCompleted = (task) => {
                         </div>
 
                         <div>
-                            <label class="block text-sm font-medium">Description</label>
+                            <label class="block text-sm font-medium">
+                                Description<span class="text-red-600">*</span>
+                            </label>
                             <textarea
                                 v-model="form.description"
+                                required
                                 class="mt-1 w-full rounded border-gray-300"
                             ></textarea>
+                             <p v-if="form.errors.description" class="text-sm text-red-600">
+                                {{ form.errors.description }}
+                            </p>
                         </div>
 
                         <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
                             <div>
-                                <label class="block text-sm font-medium">Status</label>
-                                <select v-model="form.status" class="mt-1 w-full rounded border-gray-300">
+                                <label class="block text-sm font-medium">
+                                    Status<span class="text-red-600">*</span>
+                                </label>
+                                <select 
+                                    v-model="form.status" 
+                                    class="mt-1 w-full rounded border-gray-300" 
+                                    required
+                                >
                                     <option value="pending">Pending</option>
                                     <option value="in_progress">In progress</option>
                                     <option value="completed">Completed</option>
@@ -76,8 +97,10 @@ const markAsCompleted = (task) => {
                             </div>
 
                             <div>
-                                <label class="block text-sm font-medium">Priority</label>
-                                <select v-model="form.priority" class="mt-1 w-full rounded border-gray-300">
+                                <label class="block text-sm font-medium">
+                                    Priority <span class="text-red-600">*</span>
+                                </label>
+                                <select v-model="form.priority" class="mt-1 w-full rounded border-gray-300" required>
                                     <option value="low">Low</option>
                                     <option value="medium">Medium</option>
                                     <option value="high">High</option>
@@ -85,12 +108,18 @@ const markAsCompleted = (task) => {
                             </div>
 
                             <div>
-                                <label class="block text-sm font-medium">Due date</label>
+                                <label class="block text-sm font-medium">
+                                    Due date<span class="text-red-600">*</span>
+                                </label>
                                 <input
                                     v-model="form.due_date"
                                     type="date"
+                                    required
                                     class="mt-1 w-full rounded border-gray-300"
                                 />
+                                <p v-if="form.errors.due_date" class="text-sm text-red-600">
+                                    {{ form.errors.due_date }}
+                                </p>
                             </div>
                         </div>
 
@@ -147,7 +176,7 @@ const markAsCompleted = (task) => {
                                     </button>
 
                                     <button
-                                        @click="form.delete(route('tasks.destroy', task.id))"
+                                        @click="deleteTask(task)"
                                         class="rounded bg-red-600 px-3 py-1 text-sm text-white hover:bg-red-700"
                                     >
                                         Delete

@@ -27,6 +27,22 @@ This project was created as a practical portfolio project to demonstrate adaptab
 - Due date field
 - Server-side validation
 
+### Demo
+
+Screenshots and video demo available in this repository:
+
+## Login
+
+![Login](docs/screenshots/login.png)
+
+## Tasks Dashboard
+
+![Tasks Dashboard](docs/screenshots/tasks-dashboard.png)
+
+## Create Task
+
+![Create Task](docs/screenshots/create-task.png)
+
 ## Project Purpose
 
 The purpose of this project is to demonstrate a first functional implementation using Laravel and Vue, aligned with backend and full-stack job requirements.
